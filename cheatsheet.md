@@ -3,7 +3,7 @@
 >Disclaimer: This is my own personal Linux cheatsheet. The information here was gathered from my own experiences and many online sources and is not in any way an official guide.
 
 ### apt:
-```bash
+```text
 update              #update package database to newer packages (hit: same, ign: ignored, get: new)
 upgrade             #upgrade packages with available updates
 full-upgrade        #works same as above, but will executed needed package removal
@@ -19,7 +19,7 @@ autoremove          #removes libs and packages that were once dependencies
 ```
 
 ### chmod _(change file mode bits)_:
-```bash
+```text
 owner - group - others
 0: no permission
 1: execute permission
@@ -32,7 +32,7 @@ owner - group - others
 ```
 
 ### computer information:
-```bash
+```text
 nproc             #number of processors
 lscpu             #cpu info
 lshw              #hardware info (run as root)
@@ -48,7 +48,7 @@ hdparm -i /dev/   #hard disk information
 ```
 
 ### distribution information:
-```bash
+```text
 lab-release -a
 cat /etc/*-release
 cat /etc/debian_version
@@ -57,7 +57,7 @@ hostnamectl             #for GNU systemd based distro
 ```
 
 ### disk management:
-```bash
+```text
 dd (data define)
   dd bs=## if=<input file path> of=<output file path> status=progress
 
@@ -75,7 +75,7 @@ fdisk (fixed disks):
 ```
 
 ### git:
-```bash
+```text
 #basics:
 master    #default development branch
 origin    #default upstream repository
@@ -101,19 +101,19 @@ git merge better_branch             # fast-forward master up to the merge
 ```
 
 ### kernel:
-```bash
+```text
 uname -mrs      #kernel name, version and machine hardware
 /proc/version   #file containing kernel version
 ```
 
 ### networking:
-```bash
+```text
 a     #protocol (IP or IPv6) address on a device, can also use "address"
 r     #routing table entry, can also use "route"
 ```
 
 ### lxd _(linux containers)_:
-```bash
+```text
 lxc image list [remote:]                  #list container images
 lxc init [repository:][imagename]         #create a container but do not start it
 lxc info [remote:]                        #list all containers (running and stopped)
@@ -142,12 +142,12 @@ lxc remote list     #list all remotes
 ```
 
 ### ssh:
-```bash
+```text
 ssh -X    #connect with an untrusted X server
 ```
 
 ### scp:
-```bash
+```text
 scp username@from_host:file.txt /local/directory/		    #copy file from a remote host to local host:
 scp file.txt username@to_host:/remote/directory/		    #copy file from local host to a remote host:
 scp -r username@from_host:/remote/directory/  /local/directory/	    #copy directory from a remote host to local host:
@@ -156,7 +156,7 @@ scp username@from_host:/remote/directory/file.txt username@to_host:/remote/direc
 ```
 
 ### swap: _(chmod to 600)_
-```bash
+```text
 swapoff -a                #disable swap on all swap devices
 mkswap /SWAP/PATH         #set up a file as Linux swap area
 swapon /SWAP/PATH         #enable swap on a file
@@ -166,7 +166,7 @@ sysctl vm.swappiness=##   #option to change above swappiness value
 ```
 
 ### systemd:
-```bash
+```text
 systemctl                                   #list all running services
 systemctl start foo.service                 #activate a service immediately
 systemctl stop foo.service                  #deactivate a service immediately
@@ -179,7 +179,7 @@ systemctl list-unit-files                   #list all services (enabled does not
 ```
 
 ### user management:
-```bash
+```text
 adduser <username>                      #add user to system
 adduser --home <directory> <username>   #adduser with specific home directory
 adduser -g <groupname> <username>       #adduser with specific group membership
@@ -197,7 +197,7 @@ cat /etc/group                          #list all groups
 ```
 
 ### misc:
-```bash
+```text
 du -h --max-depth=1 | sort -hr    #list directories and their size
 watch -n 0.5 free -m              #every 0.5 seconds watch the memory usage
 ctrl + alt + *                    #kill the front process
@@ -208,7 +208,7 @@ dpkg-reconfigure tzdata           #reconfigure timezone data
 ```
 
 ### Reboot Even If System Utterly Broken:
-```bash
+```text
 Alt+SysRq+R    #switch keyboard to 'raw' mode
 Alt+SysRq+E    #send SIGTERM (termination) signal to all processes except mother init
 Alt+SysRq+I    #send SIGKILL signal to all processes, a little more aggressive
