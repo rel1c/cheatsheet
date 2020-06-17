@@ -1,0 +1,218 @@
+# Linux Cheatsheet
+
+>Disclaimer: This is my own personal Linux cheatsheet. The information here was gathered from my own experiences and many online sources and is not in any way an official guide.
+
+### apt:
+```bash
+update              #update package database to newer packages (hit: same, ign: ignored, get: new)
+upgrade             #upgrade packages with available updates
+full-upgrade        #works same as above, but will executed needed package removal
+install <pkg>       #straight forward, can install multiple packages
+remove <pkg>        #removes binaries of a package, leaves configs
+purge <pkg>         #removes everything related to package including configs
+search <pkg>        #search for packages
+show <pkg>          #show info for package
+list --upgradable
+list --installed
+list --all-versions #list packages available for system
+autoremove          #removes libs and packages that were once dependencies
+```
+
+### chmod _(change file mode bits)_:
+```bash
+owner - group - others
+0: no permission
+1: execute permission
+2: write permission
+3: write and execute permissions
+4: read permission
+5: read and execute permissions
+6: read and write permissions
+7: read, write and execute permissions
+```
+
+### computer information:
+```bash
+nproc             #number of processors
+lscpu             #cpu info
+lshw              #hardware info (run as root)
+lspci             #pci bus info
+lsusb             #usb controller info
+inxi -Fx          #bash script that fetches hardware details w/ beautified output
+lsblk             #block device info
+df -h             #disk space of file systems
+free -m           #check memory usage
+/proc/cpuinfo     #file containing cpu info
+/proc/meminfo     #file containing memory info
+hdparm -i /dev/   #hard disk information
+```
+
+### distribution information:
+```bash
+lab-release -a
+cat /etc/*-release
+cat /etc/debian_version
+cat /issue.net
+hostnamectl             #for GNU systemd based distro
+```
+
+### disk management:
+```bash
+dd (data define)
+  dd bs=## if=<input file path> of=<output file path> status=progress
+
+backup disk as image:
+sudo dd if=/dev/sda conv=sync,noerror bs=64K | gzip -c  > /PATH/TO/DRIVE/backup_image.img.gz
+
+fdisk (fixed disks):
+  -l              #list disk info
+  /PATH/TO/DISK   #edit partitions
+
+  cfdisk (curses fixed disks) #TUI based fdisk
+  parted #list and modify partitions
+  blkid  #prints block device attributes like uuid and file system type
+  mkfs (make file system)   #mkfs.<format> /PATH/TO/PARTITION
+```
+
+### git:
+```bash
+#basics:
+master    #default development branch
+origin    #default upstream repository
+HEAD      #current branch
+HEAD^     #parent of HEAD
+HEAD~4    #great-great grandparent of HEAD
+
+#repo management:
+git status		    #file changes in working directory
+git diff		    #changes to tracked files
+git log		    #history of changes
+git git blame $file	    #who changed what and when in a file
+git show $id	    #commit identified by $ID
+git branch		    #all local branches
+git reset --hard	    #return to last committed state **cannot be undone!**
+
+#make better branch the new master:
+git checkout better_branch
+git merge --strategy=ours --no-commit master
+git commit          # add information to the template merge message
+git checkout master
+git merge better_branch             # fast-forward master up to the merge
+```
+
+### kernel:
+```bash
+uname -mrs      #kernel name, version and machine hardware
+/proc/version   #file containing kernel version
+```
+
+### networking:
+```bash
+a     #protocol (IP or IPv6) address on a device, can also use "address"
+r     #routing table entry, can also use "route"
+```
+
+### lxd _(linux containers)_:
+```bash
+lxc image list [remote:]                  #list container images
+lxc init [repository:][imagename]         #create a container but do not start it
+lxc info [remote:]                        #list all containers (running and stopped)
+lxc info [remote:][name]                  #get detailed information about a particular container
+lxc start [remote:][name]                 #start a stopped container
+lxc stop [remote:][name]                  #stop a container
+lxc restart [remote:][name]               #restart a container
+lxc pause [remote:][name]                 #suspend a container so its processes do not consume CPU resources
+lxc delete [remote:][name]                #remove a stopped container
+lxc delete --force [remote:][name]        #remove a running container
+lxc config edit [remote:][name]           #live edit a specific containers configuration
+lxc profile list [remote:]                #list available container profiles
+lxc profile show [remote:][profilename]   #list details of a particular profile
+lxc profile edit [remote:][profilename]   #change the details in a profile
+lxc config show [remote:][name]           #show container configuration
+lxc exec [remote:][name] -- [command]     #run command in container
+lxc exec [remote:][name] -- /bin/bash     #run bash in container
+lxc file pull [remote:][container]/[path] [destination]      #download a copy from a container to a specific destination
+lxc file push [filename] [remote][container]/[path]      #upload a file into a container
+lxc file edit [remote:][container]/[path]                #edit file in container in local editor
+lxc snapshot [remote:][container] [name]                 #create container snapshot
+lxc snapshot restore [remote:][destination container] [snapshot name]     #restore container from snapshot
+lxc copy [remote:][source container]/[snapshot name] [remote:][new container name]     #create new container from snapshot
+lxc delete [remote:][container]/[snapshot]      #delete snapshot
+lxc remote list     #list all remotes
+```
+
+### ssh:
+```bash
+ssh -X    #connect with an untrusted X server
+```
+
+### scp:
+```bash
+scp username@from_host:file.txt /local/directory/		    #copy file from a remote host to local host:
+scp file.txt username@to_host:/remote/directory/		    #copy file from local host to a remote host:
+scp -r username@from_host:/remote/directory/  /local/directory/	    #copy directory from a remote host to local host:
+scp -r /local/directory/ username@to_host:/remote/directory/	    #copy directory from local host to a remote host:
+scp username@from_host:/remote/directory/file.txt username@to_host:/remote/directory/ #copy file from remote host to remote host:
+```
+
+### swap: _(chmod to 600)_
+```bash
+swapoff -a                #disable swap on all swap devices
+mkswap /SWAP/PATH         #set up a file as Linux swap area
+swapon /SWAP/PATH         #enable swap on a file
+swapon --show             #see if swap is active
+/proc/sys/vm/swappiness   #swap niceness, 0-100. lower value corresponds with less use
+sysctl vm.swappiness=##   #option to change above swappiness value
+```
+
+### systemd:
+```bash
+systemctl                                   #list all running services
+systemctl start foo.service                 #activate a service immediately
+systemctl stop foo.service                  #deactivate a service immediately
+systemctl restart foo.service               #restart a service
+systemctl status foo.service                #show service status
+systemctl enable foo.service                #enable service to start on boot
+systemctl disable foo.service               #disable service to start on boot
+systemctl is-enabled foo.service; echo $?   #check whether a service is already enabled or not
+systemctl list-unit-files                   #list all services (enabled does not mean running!)
+```
+
+### user management:
+```bash
+adduser <username>                      #add user to system
+adduser --home <directory> <username>   #adduser with specific home directory
+adduser -g <groupname> <username>       #adduser with specific group membership
+passwd <username>                       #change user password
+usermod -h <directory> <username>       #change user home directory
+addgroup <groupname>                    #add group to system
+userdel -r <username>                   #delete user along with their home directory
+groupdel <groupname>                    #delete a group
+usermod -g <groupname> <username>       #change user's primary group
+usermod -a -G <groupname> <username>    #adduser to an existing group as a secondary group
+id <username>                           #see user's list of groups, GIDS, and UID
+id -G -n <username>                     #see user's groups
+cat /etc/passwd                         #list all users
+cat /etc/group                          #list all groups 
+```
+
+### misc:
+```bash
+du -h --max-depth=1 | sort -hr    #list directories and their size
+watch -n 0.5 free -m              #every 0.5 seconds watch the memory usage
+ctrl + alt + *                    #kill the front process
+ctrl + alt + Fkey                 #switch to virtual console
+alt + .                           #recall previous argument
+grep installed /var/log/dpkg.log  #list packages with installation timestamps
+dpkg-reconfigure tzdata           #reconfigure timezone data
+```
+
+### Reboot Even If System Utterly Broken:
+```bash
+Alt+SysRq+R    #switch keyboard to 'raw' mode
+Alt+SysRq+E    #send SIGTERM (termination) signal to all processes except mother init
+Alt+SysRq+I    #send SIGKILL signal to all processes, a little more aggressive
+Alt+SysRq+S    #sync all filesystems to prevent data loss
+Alt+SysRq+U    #remount filesystems as read-only
+Alt+SysRq+B    #forcefully reboot
+```
