@@ -1,5 +1,5 @@
 # Linux Cheatsheet
-
+---
 >Disclaimer: This is my own personal Linux cheatsheet. The information here was gathered from my own experiences and many online sources and is not in any way an official guide.
 
 ### apt:
@@ -179,7 +179,7 @@ systemctl list-unit-files                   #list all services (enabled does not
 ```
 
 ### user management:
-```text
+```bash
 adduser <username>                      #add user to system
 adduser --home <directory> <username>   #adduser with specific home directory
 adduser -g <groupname> <username>       #adduser with specific group membership
@@ -215,4 +215,25 @@ Alt+SysRq+I    #send SIGKILL signal to all processes, a little more aggressive
 Alt+SysRq+S    #sync all filesystems to prevent data loss
 Alt+SysRq+U    #remount filesystems as read-only
 Alt+SysRq+B    #forcefully reboot
+```
+
+# Git Cheatsheet
+---
+### git
+```bash
+  log --graph --full-history            #display visual log of complete working tree
+  log --oneline                         #collapse commits to one line each
+  log --simplify-by-decoration          #hist most linear commits, simplifying output
+  log -- FILE_A.EXT FILE_B.EXT          #show commit history for specific files
+  shortlog                              #simple version of git log showing authors and short message
+  show COMMIT_A...COMMIT_B              #output all commits in range from commit A to commit B
+  show --pretty="" --name-only COMMIT   #list all files touched in commit
+```
+
+# Vim Cheatsheet
+---
+### settings _:set_
+```text
+list/nolist     #whitespace
+nu/nonu         #line numbers
 ```
