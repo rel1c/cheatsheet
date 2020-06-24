@@ -1,5 +1,4 @@
 # Linux Cheatsheet
----
 >Disclaimer: This is my own personal Linux cheatsheet. The information here was gathered from my own experiences and many online sources and is not in any way an official guide.
 
 ### apt:
@@ -72,32 +71,6 @@ fdisk (fixed disks):
   parted #list and modify partitions
   blkid  #prints block device attributes like uuid and file system type
   mkfs (make file system)   #mkfs.<format> /PATH/TO/PARTITION
-```
-
-### git:
-```text
-#basics:
-master    #default development branch
-origin    #default upstream repository
-HEAD      #current branch
-HEAD^     #parent of HEAD
-HEAD~4    #great-great grandparent of HEAD
-
-#repo management:
-git status		    #file changes in working directory
-git diff		    #changes to tracked files
-git log		    #history of changes
-git git blame $file	    #who changed what and when in a file
-git show $id	    #commit identified by $ID
-git branch		    #all local branches
-git reset --hard	    #return to last committed state **cannot be undone!**
-
-#make better branch the new master:
-git checkout better_branch
-git merge --strategy=ours --no-commit master
-git commit          # add information to the template merge message
-git checkout master
-git merge better_branch             # fast-forward master up to the merge
 ```
 
 ### kernel:
@@ -218,22 +191,102 @@ Alt+SysRq+B    #forcefully reboot
 ```
 
 # Git Cheatsheet
----
 ### git
 ```bash
-  log --graph --full-history            #display visual log of complete working tree
-  log --oneline                         #collapse commits to one line each
-  log --simplify-by-decoration          #hist most linear commits, simplifying output
-  log -- FILE_A.EXT FILE_B.EXT          #show commit history for specific files
-  shortlog                              #simple version of git log showing authors and short message
-  show COMMIT_A...COMMIT_B              #output all commits in range from commit A to commit B
-  show --pretty="" --name-only COMMIT   #list all files touched in commit
+#history:
+log --graph --full-history            #display visual log of complete working tree
+log --oneline                         #collapse commits to one line each
+log --simplify-by-decoration          #hist most linear commits, simplifying output
+log -- FILE_A.EXT FILE_B.EXT          #show commit history for specific files
+shortlog                              #simple version of git log showing authors and short message
+show COMMIT_A...COMMIT_B              #output all commits in range from commit A to commit B
+show --pretty="" --name-only COMMIT   #list all files touched in commit
+remote set-url origin new.git.url/    #change remote url for repo
+remote -v                             #view existing remote(s)
+
+#basics:
+master                                #default development branch
+origin                                #default upstream repository
+HEAD                                  #current branch
+HEAD^                                 #parent of HEAD
+HEAD~4                                #great-great grandparent of HEAD
+
+#repo management:
+git status		                        #file changes in working directory
+git diff		                          #changes to tracked files
+git log		                            #history of changes
+git git blame $file	                  #who changed what and when in a file
+git show $id	                        #commit identified by $ID
+git branch		                        #all local branches
+git reset --hard	                    #return to last committed state **cannot be undone!**
+
+#make better branch the new master:
+git checkout better_branch
+git merge --strategy=ours --no-commit master
+git commit                            # add information to the template merge message
+git checkout master
+git merge better_branch               # fast-forward master up to the merge
 ```
 
+
 # Vim Cheatsheet
----
-### settings _:set_
+### vim
 ```text
+#settings:
 list/nolist     #whitespace
 nu/nonu         #line numbers
+
+#movement:
+h        #move cursor left
+j        #move cursor down
+k        #move cursor up
+l        #move cursor right
+H        #move to top of screen
+M        #move to middle of screen
+L        #move to bottom of screen
+w        #jump forwards to the start of a word
+W        #jump forwards to the start of a word (words can contain punctuation)
+e        #jump forwards to the end of a word
+E        #jump forwards to the end of a word (words can contain punctuation)
+b        #jump backwards to the start of a word
+B        #jump backwards to the start of a word (words can contain punctuation)
+0        #jump to the start of the line
+^        #jump to the first non-blank character of the line
+$        #jump to the end of the line
+g_       #jump to the last non-blank character of the line
+gg       #go to the first line of the document
+G        #go to the last line of the document
+5G       #go to line 5
+fx       #jump to next occurrence of character x
+tx       #jump to before next occurrence of character x
+}        #jump to next paragraph (or function/block, when editing code)
+{        #jump to previous paragraph (or function/block, when editing code)
+zz       #center cursor on screen
+Ctrl + b #move back one full screen
+Ctrl + f #move forward one full screen
+Ctrl + d #move forward 1/2 a screen
+Ctrl + u #move back 1/2 a screen
+
+#insert mode:
+i        # insert before the cursor
+I        # insert at the beginning of the line
+a        # insert (append) after the cursor
+A        # insert (append) at the end of the line
+o        # append (open) a new line below the current line
+O        # append (open) a new line above the current line
+ea       # insert (append) at the end of the word
+
+editing:
+r        # replace a single character
+J        # join line below to the current one
+cc       # change (replace) entire line
+cw       # change (replace) to the start of the next word
+ce       # change (replace) to the end of the next word
+cb       # change (replace) to the start of the previous word
+c0       # change (replace) to the start of the line
+c$       # change (replace) to the end of the line
+s        # delete character and substitute text
+S        # delete line and substitute text (same as cc)
+xp       # transpose two letters (delete and paste)
+.        # repeat last command
 ```
