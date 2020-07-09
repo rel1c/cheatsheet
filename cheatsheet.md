@@ -115,8 +115,10 @@ lxc remote list     #list all remotes
 ```
 
 ### ssh:
-```text
-ssh -X    #connect with an untrusted X server
+```bash
+ssh -X                                                 #connect with an untrusted X server
+ssh-copy-id USER@REMOTE                                #copy public ssh id to remote
+ssh -L PORT:127.0.0.1:PORT -C -N -l USER@REMOTE REMOTE #tunnel for VNC connection at localhost:PORT
 ```
 
 ### scp:
@@ -169,6 +171,14 @@ cat /etc/passwd                         #list all users
 cat /etc/group                          #list all groups 
 ```
 
+### VirtualBox:
+`VBoxManage` command:
+```bash
+list vms #list all virtual machines
+list runningvms
+modifyvm VM <option1> <arg1> ... <optionn> <argn>
+```
+
 ### misc:
 ```text
 du -h --max-depth=1 | sort -hr    #list directories and their size
@@ -188,6 +198,13 @@ Alt+SysRq+I    #send SIGKILL signal to all processes, a little more aggressive
 Alt+SysRq+S    #sync all filesystems to prevent data loss
 Alt+SysRq+U    #remount filesystems as read-only
 Alt+SysRq+B    #forcefully reboot
+```
+
+
+### archives
+```bash
+7z a -p -mhe=on NAME.7z PATH  #create password protected 7z archive with encrypted metadata
+7z a NAME.7z PATH             #create 7z archive
 ```
 
 # Git Cheatsheet
