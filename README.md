@@ -182,9 +182,9 @@ Reconfigure timezone data
 
 ### Reboot Even If System Utterly Broken
 
-- `Alt+SysRq+R` Switch keyboard to 'raw' mode
-- `Alt+SysRq+E` Send SIGTERM (termination) signal to all processes except mother init
-- `Alt+SysRq+I` Send SIGKILL signal to all processes, a little more aggressive
+- `Alt+SysRq+R` Switch keyboard to raw input mode
+- `Alt+SysRq+E` Send SIGTERM signal to all processes
+- `Alt+SysRq+I` Send SIGKILL signal to all processes
 - `Alt+SysRq+S` Sync all filesystems to prevent data loss
 - `Alt+SysRq+U` Remount filesystems as read-only
 - `Alt+SysRq+B` Forcefully reboot
@@ -194,10 +194,12 @@ Reconfigure timezone data
 
 Create an encrypted 7zip file with encrypted metadata  
 `7z a -p -mhe=on FILE.7z PATH`
+
 Decrypt the same 7zip file  
 `7z x FILE.7z`
 
 Create an encrypted tarball with GPG  
 `tar -cvzf - FILE | gpg -c > FILE.tar.gz.gpg`
+
 Decrypt an encrypted tarball with GPG  
 `gpg -d FILE.tar.gz.gpg | tar -xvzf -`
