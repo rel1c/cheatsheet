@@ -133,7 +133,7 @@ Set up Syncthing as a system service
 Read Syncthing logs  
 `journalctl -e -u syncthing@user.service`
 
-Use the web GUI at [localhost:8384](localhost:8384)
+Use the web GUI at [localhost:8384](http://localhost:8384)
 
 ### systemd
 
