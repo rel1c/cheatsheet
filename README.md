@@ -84,7 +84,7 @@ Modify or add a passphrase
 Remove the ith passphrase  
 `cryptsetup luksKillSlot /dev/part i`
 
-Open or close LUKS partition with "target" as name 
+Open or close LUKS partition with "target" as name
 - `cryptsetup luksOpen /dev/part <target>`
 - `cryptsetup luksClose <target>`
 
@@ -124,6 +124,16 @@ Check swap niceness between 0-100, Lower values correspond with less use
 Assign swap niceness, as described above  
 `sysctl vm.swappiness=100`
 
+
+### Syncthing
+
+Set up Syncthing as a system service  
+`systemctl enable syncthing@user.service`
+
+Read Syncthing logs  
+`journalctl -e -u syncthing@user.service`
+
+Use the web GUI at [localhost:8384](localhost:8384)
 
 ### systemd
 
