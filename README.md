@@ -1,6 +1,6 @@
-# Linux Cheatsheet
+# Linux Cheat Sheet
 
-This is my personal Linux cheatsheet, for when I don't feel like reading man pages.
+This is my personal Linux cheat sheet, for when I don't feel like reading man pages.
 Use it at your own discretion!
 
 
@@ -40,7 +40,7 @@ Back up a disk as an image file
 List disk info  
 `fdisk -l`
 
-Manipulate disk parition table  
+Manipulate disk partition table  
 `fdisk /PATH/TO/DISK`
 
 Use a curses based textual user interface  
@@ -130,13 +130,13 @@ Assign swap niceness, as described above
 List all running services:
 `systemctl`
 
-Configure services in realtime
+Configure services in real time
 - `systemctl start foo.service`
 - `systemctl stop foo.service`
 - `systemctl restart foo.service`
 - `systemctl status foo.service`
 
-Configure services at boottime
+Configure services at boot time
 - `systemctl enable foo.service`
 - `systemctl disable foo.service`
 
@@ -152,7 +152,7 @@ List all virtual machines
 List running virtual machines  
 `VboxManage list runningvms`
 
-Modify a specfic machine  
+Modify a specific machine  
 `VboxManage modifyvm VM <option1> <arg1> ... <optionn> <argn>`
 
 
@@ -185,8 +185,8 @@ Reconfigure timezone data
 - `Alt+SysRq+R` Switch keyboard to raw input mode
 - `Alt+SysRq+E` Send SIGTERM signal to all processes
 - `Alt+SysRq+I` Send SIGKILL signal to all processes
-- `Alt+SysRq+S` Sync all filesystems to prevent data loss
-- `Alt+SysRq+U` Remount filesystems as read-only
+- `Alt+SysRq+S` Sync all file systems to prevent data loss
+- `Alt+SysRq+U` Remount file systems as read-only
 - `Alt+SysRq+B` Forcefully reboot
 
 
