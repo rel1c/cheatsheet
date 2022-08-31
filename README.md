@@ -213,3 +213,14 @@ Create an encrypted tarball with GPG
 
 Decrypt an encrypted tarball with GPG  
 `gpg -d FILE.tar.gz.gpg | tar -xvzf -`
+
+### Battery and Power
+
+Get power sources
+`upower -e`
+
+Get power source information
+`upower -i <source>`
+
+Battery metrics, including thermals
+`acpi --verbose`
