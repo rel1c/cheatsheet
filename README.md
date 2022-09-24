@@ -23,6 +23,11 @@ Distribution release file(s)
 On a GNU systemd based system, use the `hostnamectl` command
 
 
+### User Management
+
+Add a user in the `sudo` group with a home directory
+`useradd name --comment "Full Name" --groups sudo --create-home --user-group`
+
 ### dd (data define)
 
 Data define, or convert and copy a file  
@@ -135,6 +140,7 @@ Read Syncthing logs
 
 Use the web GUI at [localhost:8384](http://localhost:8384)
 
+
 ### systemd
 
 List all running services:
@@ -213,6 +219,7 @@ Create an encrypted tarball with GPG
 
 Decrypt an encrypted tarball with GPG  
 `gpg -d FILE.tar.gz.gpg | tar -xvzf -`
+
 
 ### Battery and Power
 
