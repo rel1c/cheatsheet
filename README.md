@@ -52,6 +52,19 @@ Use a curses based textual user interface
 `cfdisk`
 
 
+### SMART Disk Monitoring
+
+Check if disk is SMART capable
+`smartctl --info /dev/dsk`
+
+Read error log
+`smartctl --log=error /dev/dsk`
+
+Test hard disk
+`smartctl --test=short /dev/dsk`
+`smartctl --test=long /dev/dsk`
+
+
 ### Miscellaneous Disk Management
 
 List and modify partitions  
