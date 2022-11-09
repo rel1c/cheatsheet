@@ -257,26 +257,26 @@ wg genkey | tee privatekey | wg pubkey > publickey
 Server:
 ```
 [Interface]
-Address = 10.10.10.1
+Address = x.x.x.1
 PrivateKey = <server's privatekey>
 ListenPort = 51820
 
 [Peer]
 PublicKey = <client's publickey>
-AllowedIPs = 10.10.10.2/32
+AllowedIPs = x.x.x.2/32
 ```
 
 Client:
 ```
 [Interface]
-Address = 10.10.10.2
+Address = x.x.x.2
 PrivateKey = <client's privatekey>
 ListenPort = 21841
 
 [Peer]
 PublicKey = <server's publickey>
 Endpoint = <server's ip>:51820
-AllowedIPs = 10.10.10.0/24,<server LAN subnet>
+AllowedIPs = x.x.x.0/24,<server LAN subnet>
 
 # This is for if you're behind a NAT and
 # want the connection to be kept alive.
