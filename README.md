@@ -4,7 +4,7 @@ This is my personal Linux cheat sheet, for when I don't feel like reading man pa
 Use it at your own discretion!
 
 
-### Computer Information:
+## Computer Information:
 
 List hardware specifics
 - `nproc` Number of processors
@@ -15,7 +15,7 @@ List hardware specifics
 - `lsblk` Block devices
 
 
-### Distribution Information:
+## Distribution Information:
 
 Distribution release file(s)  
 `cat /etc/*-release`
@@ -23,12 +23,12 @@ Distribution release file(s)
 On a GNU systemd based system, use the `hostnamectl` command
 
 
-### User Management
+## User Management
 
 Add a user in the `sudo` group with a home directory
 `useradd name --comment "Full Name" --groups sudo --create-home --user-group`
 
-### dd (data define)
+## dd (data define)
 
 Data define, or convert and copy a file  
 `dd bs=## if=PATH/INFILE of=PATH/OUTFILE status=progress`
@@ -40,7 +40,7 @@ Back up a disk as an image file
 `dd if=/dev/DISK conv=sync,noerror bs=64K | gzip -c  > /PATH/FILE.img.gz`
 
 
-### fdisk (fixed disks)
+## fdisk (fixed disks)
 
 List disk info  
 `fdisk -l`
@@ -52,7 +52,7 @@ Use a curses based textual user interface
 `cfdisk`
 
 
-### SMART Disk Monitoring
+## SMART Disk Monitoring
 
 Check if disk is SMART capable
 `smartctl --info /dev/dsk`
@@ -65,7 +65,7 @@ Test hard disk
 `smartctl --test=long /dev/dsk`
 
 
-### Miscellaneous Disk Management
+## Miscellaneous Disk Management
 
 List and modify partitions  
 `parted`
@@ -77,7 +77,7 @@ Make and format a file system
 `mkfs.<format> /PATH/TO/PARTITION`
 
 
-### Kernel:
+## Kernel:
 
 Get kernel name, version and machine hardware  
 `uname -mrs`
@@ -86,7 +86,7 @@ Output info directly from file containing kernel version
 `cat /proc/version`
 
 
-### LUKS (Linux Unified Key Setup)
+## LUKS (Linux Unified Key Setup)
 
 Encrypt a partition verbosely and verify the passphrase  
 `cryptsetup -y -v luksformat /dev/part`
@@ -107,13 +107,13 @@ Open or close LUKS partition with "target" as name
 - `cryptsetup luksClose <target>`
 
 
-### ssh
+## ssh
 
 Establish an SSH tunnel for VNC connection  
 `ssh -L PORT:127.0.0.1:PORT -C -N -l USER@REMOTE REMOTE`
 
 
-### scp
+## scp
 
 Copy a file from remote to local  
 `scp username@remote:file.txt /local/directory/`
@@ -122,7 +122,7 @@ Copy a file from local to remote
 `scp file.txt username@remote:/remote/directory/`
 
 
-### swap _(chmod to 600)_
+## swap _(chmod to 600)_
 
 Disable swap on all swap devices  
 `swapoff -a`
@@ -143,7 +143,7 @@ Assign swap niceness, as described above
 `sysctl vm.swappiness=100`
 
 
-### Syncthing
+## Syncthing
 
 Set up Syncthing as a system service  
 `systemctl enable syncthing@user.service`
@@ -154,7 +154,7 @@ Read Syncthing logs
 Use the web GUI at [localhost:8384](http://localhost:8384)
 
 
-### systemd
+## systemd
 
 List all running services:
 `systemctl`
@@ -173,7 +173,7 @@ List all services
 `systemctl list-unit-files`
 
 
-### VirtualBox
+## VirtualBox
 
 List all virtual machines  
 `VBoxManage list vms`
@@ -185,7 +185,7 @@ Modify a specific machine
 `VboxManage modifyvm VM <option1> <arg1> ... <optionn> <argn>`
 
 
-### Miscellaneous
+## Miscellaneous
 
 Display file or file system status  
 `stat <option> <file>`
@@ -209,7 +209,7 @@ Reconfigure timezone data
 `dpkg-reconfigure tzdata`
 
 
-### Reboot Even If System Utterly Broken
+## Reboot Even If System Utterly Broken
 
 - `Alt+SysRq+R` Switch keyboard to raw input mode
 - `Alt+SysRq+E` Send SIGTERM signal to all processes
@@ -219,7 +219,7 @@ Reconfigure timezone data
 - `Alt+SysRq+B` Forcefully reboot
 
 
-### Archiving Files
+## Archiving Files
 
 Create an encrypted 7zip file with encrypted metadata  
 `7z a -p -mhe=on FILE.7z PATH`
@@ -234,7 +234,7 @@ Decrypt an encrypted tarball with GPG
 `gpg -d FILE.tar.gz.gpg | tar -xvzf -`
 
 
-### Battery and Power
+## Battery and Power
 
 Get power sources
 `upower -e`
@@ -244,3 +244,64 @@ Get power source information
 
 Battery metrics, including thermals
 `acpi --verbose`
+
+## Wireguard
+
+### Generate key pairs
+```
+umask 077  # This makes sure credentials don't leak in a race condition
+wg genkey | tee privatekey | wg pubkey > publickey
+```
+
+### Configuration files in `/etc/wireguard/wgX.conf`
+Server:
+```
+[Interface]
+Address = 10.10.10.1
+PrivateKey = <server's privatekey>
+ListenPort = 51820
+
+[Peer]
+PublicKey = <client's publickey>
+AllowedIPs = 10.10.10.2/32
+```
+
+Client:
+```
+[Interface]
+Address = 10.10.10.2
+PrivateKey = <client's privatekey>
+ListenPort = 21841
+
+[Peer]
+PublicKey = <server's publickey>
+Endpoint = <server's ip>:51820
+AllowedIPs = 10.10.10.0/24,<server LAN subnet>
+
+# This is for if you're behind a NAT and
+# want the connection to be kept alive.
+PersistentKeepalive = 25
+```
+
+### Quick up/down over interface:
+```
+wg-quick up wg0
+wg-quick down wg0
+```
+
+### Forward server LAN over iptables:
+Add the following at the end of the `[Interface]` section in the server config
+file.
+
+```
+PostUp   = iptables -A FORWARD -i %i -j ACCEPT; iptables -A FORWARD -o %i -j ACCEPT; iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+PostDown = iptables -D FORWARD -i %i -j ACCEPT; iptables -D FORWARD -o %i -j ACCEPT; iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+```
+
+### Run as a service on client
+```
+sudo chown -R root:root /etc/wireguard/
+sudo chmod -R og-rwx /etc/wireguard/*
+sudo systemctl enable wg-quick@wg0.service
+sudo systemctl start wg-quick@wg0.service
+```
